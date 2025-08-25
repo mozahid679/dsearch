@@ -5,12 +5,6 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
-    {{-- Custom Header --}}
-    {{-- @include('components.font-end.header')
- --}}
-
-
     {{-- Hero Section --}}
     <div class="flex min-h-screen items-center justify-center bg-gray-100">
         <div class="hero-content mx-auto max-w-lg rounded-lg bg-white bg-opacity-90 p-10 text-center shadow-lg">

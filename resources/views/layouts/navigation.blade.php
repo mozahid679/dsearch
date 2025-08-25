@@ -1,16 +1,13 @@
 <nav class="border-b border-gray-100 bg-white" x-data="{ open: false }">
-    <!-- Primary Navigation Menu -->
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 justify-between">
             <div class="flex">
-                <!-- Logo -->
                 <div class="flex shrink-0 items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo class="block h-12 w-auto fill-current" />
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
@@ -21,13 +18,15 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
             <div class="hidden sm:ms-6 sm:flex sm:items-center">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none">
-                            <div>{{ Auth::user()->name }}</div>
+                            @auth
+
+                                <div>{{ Auth::user()->name }}</div>
+                            @endauth
 
                             <div class="ms-1">
                                 <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
@@ -86,10 +85,13 @@
 
         <!-- Responsive Settings Options -->
         <div class="border-t border-gray-200 pb-1 pt-4">
-            <div class="px-4">
-                <div class="font-medium text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
+            @auth
+
+                <div class="px-4">
+                    <div class="font-medium text-gray-800">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
+            @endauth
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">

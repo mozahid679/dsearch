@@ -8,13 +8,17 @@ use App\Http\Controllers\{
     SearchLogController
 };
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::middleware('auth')->get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/dashboard', function () {
+Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route to display the search form
 Route::middleware(['auth'])->get('/search', [LocalPersonSearchController::class, 'showSearchForm'])->name('person.search.form');
