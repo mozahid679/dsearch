@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SearchLog extends Model
 {
+
     protected $fillable = [
         'user_id',
         'search_route',
@@ -15,8 +16,15 @@ class SearchLog extends Model
         'searched_at'
     ];
 
+    public $timestamps = false;
+
     protected $casts = [
         'input_fields' => 'array',
         'searched_at' => 'datetime',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

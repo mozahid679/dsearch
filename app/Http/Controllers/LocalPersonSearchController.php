@@ -7,15 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\PersonSearchDudok;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PersonSearchExport;
+use App\Models\SearchLog;
+use Illuminate\Container\Attributes\Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class LocalPersonSearchController extends Controller
 {
-
     public function showSearchForm()
     {
-
-
-
         return view('search.form');
     }
 
@@ -29,6 +28,14 @@ class LocalPersonSearchController extends Controller
             'national_id' => 'nullable|string|min:1|max:17',
             'company_name' => 'nullable|string|max:255',
         ]);
+        SearchLog::create([
+            'user_id'      => auth()->id(),
+            'search_route' => $request->route()->getName(), // or 'search' if unnamed
+            'input_fields' => $request->except(['_token']),
+            'ip_address'   => $request->ip(),
+            'user_agent'   => $request->header('User-Agent'),
+        ]);
+
 
         $query = PersonSearchDudok::query();
 
@@ -54,7 +61,6 @@ class LocalPersonSearchController extends Controller
         try {
             $perPage = $request->per_page ?? 10;
             $results = $query->orderBy('COMPANY_NAME', 'asc')->paginate($perPage);
-            // $results = $query->orderBy('COMPANY_NAME', 'asc')->paginate(20);
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['message' => 'An error occurred while searching: ' . $e->getMessage()]);
         }
