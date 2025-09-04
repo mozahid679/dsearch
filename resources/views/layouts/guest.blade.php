@@ -20,7 +20,7 @@
     <div class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
         <div class="pb-2">
             <a href="/">
-                <x-application-logo class="m-2 mx-auto h-20 w-20 text-gray-500" />
+                <x-application-logo class="mx-auto h-20 w-20" />
                 <span class="my-4 text-xl font-bold"> Registrar of Joint Stock Companies And Firms</span>
             </a>
         </div>

@@ -1,69 +1,74 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-3xl font-bold text-gray-800">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('🔍 Person Search') }}
         </h2>
     </x-slot>
 
-    <section class="py-10">
+    <section class="relative isolate overflow-hidden bg-gradient-to-tr from-blue-100 via-white to-emerald-100 py-24">
         <div class="mx-auto max-w-4xl">
-            <div class="rounded-xl border border-gray-200 bg-white p-10 shadow-lg">
+            <div class="rounded-xl border border-gray-200 bg-white p-12 shadow-lg">
                 <form class="space-y-8" id="searchForm" method="GET" action="{{ route('person.search') }}">
                     {{-- Person Name --}}
                     <div>
-                        <label class="block text-lg font-semibold text-gray-700" for="person_name">
+                        <label class="block font-semibold text-gray-700" for="person_name">
                             {{ __("Person's Name") }}
                         </label>
                         <input
-                            class="mt-3 w-full rounded-lg border-gray-300 text-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            class="mt-3 w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             id="person_name" name="person_name" type="text" value="{{ request('person_name') }}"
                             placeholder="Enter person's name" />
                     </div>
 
                     {{-- Father's Name --}}
                     <div>
-                        <label class="block text-lg font-semibold text-gray-700" for="fathers_name">
+                        <label class="block font-semibold text-gray-700" for="fathers_name">
                             {{ __("Father's Name") }}
                         </label>
                         <input
-                            class="mt-3 w-full rounded-lg border-gray-300 text-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            class="mt-3 w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             id="fathers_name" name="fathers_name" type="text" value="{{ request('fathers_name') }}"
                             placeholder="Enter father's name" />
                     </div>
 
                     {{-- National ID --}}
                     <div>
-                        <label class="block text-lg font-semibold text-gray-700" for="national_id">
+                        <label class="block font-semibold text-gray-700" for="national_id">
                             {{ __('National ID') }}
                         </label>
                         <input
-                            class="mt-3 w-full rounded-lg border-gray-300 text-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            class="mt-3 w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             id="national_id" name="national_id" type="text" value="{{ request('national_id') }}"
                             placeholder="Enter national ID" />
                     </div>
 
                     {{-- Company Name --}}
                     <div>
-                        <label class="block text-lg font-semibold text-gray-700" for="company_name">
+                        <label class="block font-semibold text-gray-700" for="company_name">
                             {{ __('Company Name') }}
                         </label>
                         <input
-                            class="mt-3 w-full rounded-lg border-gray-300 text-lg shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            class="mt-3 w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             id="company_name" name="company_name" type="text" value="{{ request('company_name') }}"
                             placeholder="Enter company name" />
                     </div>
 
                     {{-- Submit Button --}}
-                    <div class="pt-6">
+                    <div class="flex justify-center gap-4 justify-self-end">
                         <button
-                            class="w-full justify-center rounded-lg bg-blue-600 py-4 text-lg text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                            class="w-full rounded bg-gray-600 px-6 py-2 text-white hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+                            id="resetButton" type="reset" disabled>
+                            {{ __('Reset') }}
+                        </button>
+
+                        <button
+                            class="w-full rounded bg-cyan-600 px-6 py-2 text-white hover:bg-cyan-700 disabled:cursor-not-allowed disabled:opacity-50"
                             id="searchButton" type="submit" disabled>
                             {{ __('Search') }}
                         </button>
                     </div>
                 </form>
 
-                {{-- Validation Errors --}}
                 @if ($errors->any())
                     <div class="mt-8 rounded-lg border border-red-300 bg-red-50 px-6 py-5 text-red-700">
                         <strong class="block text-xl font-bold">{{ __('Error') }}</strong>
@@ -82,24 +87,32 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('searchForm');
-            const button = document.getElementById('searchButton');
+            const searchButton = document.getElementById('searchButton');
+            const resetButton = document.getElementById('resetButton');
             const inputs = form.querySelectorAll('input[type="text"]');
 
-            function toggleButton() {
+            function toggleButtons() {
                 let hasValue = false;
                 inputs.forEach(input => {
                     if (input.value.trim() !== '') {
                         hasValue = true;
                     }
                 });
-                button.disabled = !hasValue;
+                searchButton.disabled = !hasValue;
+                resetButton.disabled = !hasValue;
             }
 
-            inputs.forEach(input => {
-                input.addEventListener('input', toggleButton);
+            // When reset is clicked, clear inputs and disable both buttons again
+            resetButton.addEventListener('click', function() {
+                inputs.forEach(input => input.value = '');
+                toggleButtons();
             });
 
-            toggleButton();
+            inputs.forEach(input => {
+                input.addEventListener('input', toggleButtons);
+            });
+
+            toggleButtons();
         });
     </script>
 </x-app-layout>

@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <section>
+    <section class="relative isolate overflow-hidden bg-gradient-to-tr from-blue-100 via-white to-emerald-100 py-24">
         <div class="mx-auto mt-2 max-w-7xl">
             <x-card class="mx-auto max-w-6xl bg-white bg-opacity-90 shadow-lg">
                 <x-slot name="title">
@@ -16,8 +16,8 @@
 
                 <div class="overflow-x-auto">
                     <table
-                        class="min-w-full border-collapse divide-y divide-gray-200 rounded-lg border border-gray-400 bg-gray-200 text-left">
-                        <thead class="bg-emerald-200 text-emerald-800">
+                        class="min-w-full border-collapse divide-y divide-gray-200 border border-gray-400 bg-gray-200 text-left">
+                        <thead class="rounded-2xl bg-emerald-200 text-emerald-800">
                             <tr class="">
                                 <th class="border border-gray-300 px-4 py-3 font-semibold">#</th>
                                 <th class="border border-gray-300 px-4 py-3 font-semibold">User</th>
@@ -32,21 +32,21 @@
                             @foreach ($logs as $log)
                                 <tr
                                     class="bg-emerald-50 text-emerald-50 transition-colors duration-200 hover:bg-emerald-100 hover:text-emerald-800">
-                                    <td class="border border-gray-300 px-4 py-2 text-gray-800">{{ $log->id }}</td>
-                                    <td class="border border-gray-300 px-4 py-2 text-gray-800">
+                                    <td class="border border-gray-300 px-2 text-gray-800">{{ $log->id }}</td>
+                                    <td class="border border-gray-300 px-2 text-gray-800">
                                         {{ $log->user?->name ?? 'Guest' }}</td>
-                                    <td class="border border-gray-300 px-4 py-2 text-gray-800">{{ $log->search_route }}
+                                    <td class="border border-gray-300 px-2 text-gray-800">{{ $log->search_route }}
                                     </td>
-                                    <td class="whitespace-pre-wrap border border-gray-300 px-4 py-2 text-gray-600">
+                                    <td class="whitespace-pre-wrap border border-gray-300 text-gray-600">
                                         <code
-                                            class="block rounded p-2 text-sm">{{ json_encode($log->input_fields, JSON_PRETTY_PRINT) }}</code>
+                                            class="block text-sm">{{ json_encode($log->input_fields, JSON_PRETTY_PRINT) }}</code>
                                     </td>
-                                    <td class="border border-gray-300 px-4 py-2 text-gray-800">{{ $log->ip_address }}
+                                    <td class="border border-gray-300 px-2 text-gray-800">{{ $log->ip_address }}
                                     </td>
-                                    <td class="border border-gray-300 px-4 py-2 text-gray-500">
+                                    <td class="border border-gray-300 px-2 text-gray-500">
                                         {{ Str::limit($log->user_agent, 40) }}
                                     </td>
-                                    <td class="border border-gray-300 px-4 py-2 text-gray-800">
+                                    <td class="border border-gray-300 px-2 text-gray-800">
                                         {{ $log->searched_at->format('Y-M-D H:i:s') }}
                                     </td>
                                 </tr>

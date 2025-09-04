@@ -2,31 +2,25 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    DashboardController,
     LocalPersonSearchController,
-    PersonSearchController,
     ProfileController,
     SearchLogController
 };
 
-// Route::middleware('auth')->get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::get('/dashboard', function () {
+// Route::get('/', function () {
 //     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
-// Route to display the search form
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+});
+
 Route::middleware(['auth'])->get('/search', [LocalPersonSearchController::class, 'showSearchForm'])->name('person.search.form');
 
-// Route to handle search requests
 Route::middleware(['auth'])->get('/search/results', [LocalPersonSearchController::class, 'search'])->name('person.search');
 
-// Route to export selected rows
 Route::middleware(['auth'])->post('/search/export', [LocalPersonSearchController::class, 'exportSelected'])->name('person.search.export');
 
 Route::middleware(['auth'])->group(function () {

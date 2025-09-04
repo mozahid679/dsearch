@@ -2,18 +2,21 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 justify-between">
             <div class="flex">
-                <div class="flex shrink-0 items-center">
+                <div class="flex shrink-0 items-center justify-around">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-12 w-auto fill-current" />
+                        <x-application-logo class="block h-12 fill-current" />
                     </a>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 text-lg sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('person.search.form')" :active="request()->routeIs('person.search.form')">
                         {{ __('Search') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('searchlogs.index')" :active="request()->routeIs('searchlogs.index')">
+                        {{ __('Search Logs') }}
                     </x-nav-link>
                 </div>
             </div>

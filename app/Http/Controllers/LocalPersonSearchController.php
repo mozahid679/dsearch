@@ -20,8 +20,6 @@ class LocalPersonSearchController extends Controller
 
     public function search(Request $request)
     {
-
-
         $request->validate([
             'person_name' => 'nullable|string|max:255',
             'fathers_name' => 'nullable|string|max:255',
@@ -35,7 +33,6 @@ class LocalPersonSearchController extends Controller
             'ip_address'   => $request->ip(),
             'user_agent'   => $request->header('User-Agent'),
         ]);
-
 
         $query = PersonSearchDudok::query();
 
@@ -65,7 +62,6 @@ class LocalPersonSearchController extends Controller
             return redirect()->back()->withErrors(['message' => 'An error occurred while searching: ' . $e->getMessage()]);
         }
 
-
         return view('search.results', compact('results'));
     }
 
@@ -79,7 +75,6 @@ class LocalPersonSearchController extends Controller
         $rows = PersonSearchDudok::whereIn('CLIENT_ID', $request->selectedRows)
             ->get()
             ->toArray();
-
         return Excel::download(new PersonSearchExport($rows), 'selected_persons.xlsx');
     }
 }
